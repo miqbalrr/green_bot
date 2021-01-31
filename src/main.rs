@@ -23,6 +23,7 @@ fn main() {
 fn execute_bot() -> std::io::Result<String> {
     std::fs::remove_file("foo.txt")?;
     std::fs::remove_file(".git/index.lock");
+    std::fs::remove_file("./.git/index.lock");
     std::fs::remove_file(".git/.COMMIT_EDITMSG.swp");
     let mut file = File::create("foo.txt")?;
     let now = Utc::now();
