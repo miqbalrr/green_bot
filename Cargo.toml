@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 chrono = "0.4"
+job_scheduler = "1.2.1"
