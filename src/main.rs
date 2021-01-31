@@ -2,7 +2,6 @@ use std::process::Command;
 use std::fs::File;
 use std::io::prelude::*;
 use chrono::{Utc};
-use std::thread;
 use std::time::Duration;
 use job_scheduler::{JobScheduler, Job};
 
@@ -11,14 +10,14 @@ use job_scheduler::{JobScheduler, Job};
 fn main() {
     let mut sched = JobScheduler::new();
 
-    sched.add(Job::new("* * * * * *".parse().unwrap(), || {
+    sched.add(Job::new("* 1 * * * *".parse().unwrap(), || {
         println!("{:?}",execute_bot());
     }));
 
-    // loop {
-    //     sched.tick();
-    //     std::thread::sleep(Duration::from_millis(500));
-    // }
+    loop {
+        sched.tick();
+        std::thread::sleep(Duration::from_millis(500));
+    }
 }
 
 fn execute_bot() -> std::io::Result<String> {
