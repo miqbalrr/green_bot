@@ -11,6 +11,6 @@ fn main() -> std::io::Result<()> {
     file.write_all(format!("updated at {:?}", now).as_bytes())?;
     Command::new("git").args(&["add","."]).spawn()?;
     Command::new("git").args(&["commit","-m", format!("run at {}", now).as_str()]).spawn()?;
-    println!("{:?}", Command::new("git").args(&["push","origin","master"]).output());
+    Command::new("git").args(&["push","origin","master"]);
     Ok(())
 }
