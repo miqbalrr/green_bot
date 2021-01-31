@@ -10,7 +10,7 @@ fn main() -> std::io::Result<()> {
     //     Err(e) => println!("{}", e),
     // }
     let mut file = File::create("foo.txt")?;
-    file.write_all(b"Hello, world!")?;
+    file.write_all(format!("updated at {:?}", Utc::now()).as_bytes())?;
 
     Command::new("git").args(&["add","."]).spawn();
     Command::new("git").args(&["commit","-m", "runn"]).spawn();
