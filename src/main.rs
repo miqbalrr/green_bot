@@ -28,6 +28,6 @@ fn execute_bot() -> std::io::Result<String> {
     let now = Utc::now();
     file.write_all(format!("updated at {:?}", now).as_bytes())?;
     Command::new("git").args(&["add","foo.txt"]).spawn()?;
-    Command::new("git").args(&["commit","-a", "--amend", "-m", format!("run {:?}", now).as_str()]).spawn()?;
+    Command::new("git").args(&["commit","-a", "-m", format!("run {:?}", now).as_str()]).spawn()?;
     Ok(format!("{:?}", Command::new("git").args(&["push","origin","master"]).output()))
 }
