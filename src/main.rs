@@ -10,7 +10,7 @@ use job_scheduler::{JobScheduler, Job};
 fn main() {
     let mut sched = JobScheduler::new();
 
-    sched.add(Job::new("* 1 * * * *".parse().unwrap(), || {
+    sched.add(Job::new("1/60 * * * * *".parse().unwrap(), || {
         println!("{:?}",execute_bot());
     }));
 
@@ -21,12 +21,11 @@ fn main() {
 }
 
 fn execute_bot() -> std::io::Result<String> {
-    std::fs::remove_file("foo.txt");
-    std::fs::remove_file(".git/index.lock");
+    std::fs::remove_file("foo.txt")?;
     let mut file = File::create("foo.txt")?;
     let now = Utc::now();
     file.write_all(format!("updated at {:?}", now).as_bytes())?;
     Command::new("git").args(&["add","."]).spawn()?;
-    Command::new("git").args(&["commit","-m", format!("run at {}", now).as_str()]).spawn()?;
+    Command::new("git").args(&["commit","-m", format!("run {}", now).as_str()]).spawn()?;
     Ok(format!("{:?}", Command::new("git").args(&["push","origin","master"]).output()))
 }
